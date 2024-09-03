@@ -82,6 +82,7 @@ void testStack()
   assert(size(s) == 0);
   assert(isEmpty(s) == true);
 
+  free(s->array);
   free(s);
 }
 
