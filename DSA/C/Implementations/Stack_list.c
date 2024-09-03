@@ -53,7 +53,6 @@ int pop(stack* s)
   s->n--;
   free(temp);
 
-
   return item;
 }
 
@@ -78,6 +77,8 @@ void testStack()
   assert(pop(s) == 3);
   assert(size(s) == 0);
   assert(isEmpty(s) == true);
+
+  free(s->arr);
   free(s);
 }
 
@@ -85,6 +86,7 @@ void testStack()
 int main()
 {
   testStack();
+  printf("All test cases passed!\n");
 
   return 0;
 }
