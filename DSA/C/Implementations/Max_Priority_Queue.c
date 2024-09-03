@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
+#include <stdbool.h>
 
 typedef struct P_Queue{
     int n;
@@ -12,12 +14,12 @@ void exch(int* pq, int i, int j) {
     pq[j] = t;
 }
 
-void sink(int* pq, int n, int k) {
-    while (2*k <= n) {
+void sink(PriorityQueue* p, int k) {
+    while (2*k <= p->n) {
         int j = 2*k;
-        if (j < n && pq[j] < pq[j+1]) j++;
-        if (pq[k] >= pq[j]) break;
-        exch(pq, k, j);
+        if (j < p->n && p->pq[j] < p->pq[j+1]) j++;
+        if (p->pq[k] >= p->pq[j]) break;
+        exch(p->pq, k, j);
         k = j;
     }
 }
@@ -31,7 +33,7 @@ void swim(PriorityQueue* p, int k) {
 
 PriorityQueue* constructor(int capacity) {
     PriorityQueue* p = (PriorityQueue*)malloc(sizeof(PriorityQueue));
-    p->pq = (int*)malloc(capacity * sizeof(int));
+    p->pq = (int*)malloc((capacity + 1) * sizeof(int));
     p->n = 0;
     return p;
 }
@@ -44,11 +46,11 @@ void Insert(PriorityQueue* p, int x) {
 int Delete(PriorityQueue* p) {
     int max_elem = p->pq[1];
     exch(p->pq, 1, p->n--);
-    sink(p->pq, p->n, 1);
+    sink(p, 1);
     return max_elem;
 }
 
-int isEmpty(PriorityQueue* p) {
+bool isEmpty(PriorityQueue* p) {
     return p->n == 0;
 }
 
@@ -56,20 +58,39 @@ int size(PriorityQueue* p) {
     return p->n;
 }
 
-int main() {
+void testQueue() {
     PriorityQueue* p = constructor(10);
     Insert(p, 5);
     Insert(p, 11);
     Insert(p, 7);
-    printf("Size: %d\n", size(p));
-    printf("Deleted element: %d\n", Delete(p));
-    printf("Deleted element: %d\n", Delete(p));
-    printf("Size: %d\n", size(p));
+
+    assert(size(p) == 3);
+    assert(isEmpty(p) == false);
+
+    assert(Delete(p) == 11);
+    assert(size(p) == 2);
+    assert(isEmpty(p) == false);
+
+    assert(Delete(p) == 7);
+    assert(size(p) == 1);
+    assert(isEmpty(p) == false);
+
     Insert(p, 13);
     Insert(p, 19);
-    printf("Size: %d\n", size(p));
-    printf("Deleted element: %d\n", Delete(p));
-    printf("Size: %d\n", size(p));
 
+    assert(size(p) == 3);
+    assert(isEmpty(p) == false);
+
+    assert(Delete(p) == 19);
+    assert(size(p) == 2);
+    assert(isEmpty(p) == false);
+
+    free(p->pq);
+    free(p);
+}
+
+int main() {
+    testQueue();
+    printf("All tests passed!\n");
     return 0;
 }
