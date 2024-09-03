@@ -7,7 +7,7 @@
 typedef struct Node {
     int item;
     struct Node* next;
-    struct Node* prev; // Add a prev pointer for double linkage
+    struct Node* prev;
 } Node;
 
 typedef struct dq {
