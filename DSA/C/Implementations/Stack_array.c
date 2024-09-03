@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <limits.h>
 #include <assert.h>
 
 typedef struct stk {
@@ -89,5 +88,6 @@ void testStack()
 int main()
 {
   testStack();
+  printf("All tests passed!\n");
   return 0;
 }
