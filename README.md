@@ -1,2 +1,2 @@
 # UCA-Classroom
-All the codes practiced in uca online sessions
+All the algorithms, implementations and codes learned and practiced in uca online sessions
