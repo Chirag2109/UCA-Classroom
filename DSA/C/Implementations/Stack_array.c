@@ -4,8 +4,6 @@
 #include <limits.h>
 #include <assert.h>
 
-#define INITIAL_CAPACITY 1
-
 typedef struct stk {
   int* array;
   int n;
@@ -83,6 +81,8 @@ void testStack()
   assert(pop(s) == 3);
   assert(size(s) == 0);
   assert(isEmpty(s) == true);
+
+  free(s);
 }
 
 int main()
